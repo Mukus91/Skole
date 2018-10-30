@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\moser\\source\\repos\\BMI\\BMI\\BMI.csproj",
+      "projectUniqueName": "C:\\Users\\moser\\source\\repos\\Skole\\BMI\\BMI\\BMI.csproj",
       "projectName": "BMI",
-      "projectPath": "C:\\Users\\moser\\source\\repos\\BMI\\BMI\\BMI.csproj",
+      "projectPath": "C:\\Users\\moser\\source\\repos\\Skole\\BMI\\BMI\\BMI.csproj",
       "packagesPath": "C:\\Users\\moser\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\moser\\source\\repos\\BMI\\BMI\\obj\\",
+      "outputPath": "C:\\Users\\moser\\source\\repos\\Skole\\BMI\\BMI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
