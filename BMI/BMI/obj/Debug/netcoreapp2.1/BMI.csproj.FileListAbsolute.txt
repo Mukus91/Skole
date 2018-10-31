@@ -20,3 +20,14 @@ C:\Users\moser\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.AssemblyIn
 C:\Users\moser\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.AssemblyInfo.cs
 C:\Users\moser\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.dll
 C:\Users\moser\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.pdb
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\bin\Debug\netcoreapp2.1\BMI.deps.json
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\bin\Debug\netcoreapp2.1\BMI.runtimeconfig.json
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\bin\Debug\netcoreapp2.1\BMI.runtimeconfig.dev.json
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\bin\Debug\netcoreapp2.1\BMI.dll
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\bin\Debug\netcoreapp2.1\BMI.pdb
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.csprojAssemblyReference.cache
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.csproj.CoreCompileInputs.cache
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.AssemblyInfoInputs.cache
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.AssemblyInfo.cs
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.dll
+C:\Users\MarkusHansen\source\repos\Skole\BMI\BMI\obj\Debug\netcoreapp2.1\BMI.pdb
