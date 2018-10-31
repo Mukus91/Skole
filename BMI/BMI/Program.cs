@@ -6,7 +6,7 @@ namespace BMI
     {
         static void Main(string[] args)
         {
-            start1:
+        start1:
             Console.SetWindowSize(50, 30);
             Console.SetCursorPosition(12, 0);
             Console.WriteLine("Reverse BMI Calculator");
@@ -24,7 +24,7 @@ namespace BMI
 
 
             Console.SetCursorPosition(0, 20);
-            Console.WriteLine("Who do want to compare to?");
+            Console.WriteLine("Selection: ");
 
             Console.SetCursorPosition(0, 21);
             Console.Write("Input measurements manually[A]");
@@ -33,10 +33,15 @@ namespace BMI
             Console.Write("Compare to Ryan Reynolds[B]");
 
             Console.SetCursorPosition(0, 23);
-            Console.Write("Compare to Arnold Schwarzeneggers[C]");
+            Console.Write("Compare to Arnold Schwarzenegger[C]");
 
             Console.SetCursorPosition(0, 24);
             Console.Write("Back to start[D]");
+
+            Console.SetCursorPosition(0, 25);
+            Console.Write("Exit [P]");
+
+            Console.SetCursorPosition(11, 20);
 
 
 
@@ -123,6 +128,7 @@ namespace BMI
 
             if (valg.Key == ConsoleKey.C)
             {
+
                 double HeightPerson2 = 188;
                 double WeightPerson2 = 107;
 
@@ -168,7 +174,12 @@ namespace BMI
                 goto start1;
             }
 
-           
+            if (valg.Key == ConsoleKey.P)
+            {
+                return;
+            }
+
+
 
         }
 
