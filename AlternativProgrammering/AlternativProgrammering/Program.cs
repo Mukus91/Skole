@@ -40,7 +40,7 @@ namespace AlternativProgrammering
 
             Console.Clear();
 
-            Valgmuligheder();
+            
 
             Console.SetCursorPosition(17, 15);
             Console.Write("Indtast dit navn:");
@@ -48,7 +48,7 @@ namespace AlternativProgrammering
 
             Console.Clear();
 
-            Valgmuligheder();
+            
 
             Console.SetCursorPosition(17, 15);
             Console.Write("Indtast din adresse:");
@@ -56,7 +56,7 @@ namespace AlternativProgrammering
 
             Console.Clear();
 
-            Valgmuligheder();
+           
 
             Console.SetCursorPosition(17, 15);
             Console.Write("Indtast dit postnr:");
@@ -64,7 +64,7 @@ namespace AlternativProgrammering
 
             Console.Clear();
 
-            Valgmuligheder();
+            
 
             Console.SetCursorPosition(17, 15);
             Console.Write("Indtast bynavn:");
@@ -72,11 +72,13 @@ namespace AlternativProgrammering
 
             Console.Clear();
 
-            Valgmuligheder();
+            
 
             Console.SetCursorPosition(17, 15);
             Console.Write("Indtast din email:");
             inputArr[5] = Console.ReadLine();
+
+            Valgmuligheder();
 
 
             //File.WriteAllText(@"test.txt", inputArr[0]);
@@ -91,11 +93,11 @@ namespace AlternativProgrammering
 
             using (StreamWriter sw = inf.AppendText()) //Skriver til fil
             {
-                sw.WriteLine(inputArr[1]);
-                sw.WriteLine(inputArr[2]);
-                sw.WriteLine(inputArr[3]);
-                sw.WriteLine(inputArr[4]);
-                sw.WriteLine(inputArr[5]);
+                sw.WriteLine(inputArr[1] + ",");
+                sw.WriteLine(inputArr[2] + ",");
+                sw.WriteLine(inputArr[3] + ",");
+                sw.WriteLine(inputArr[4] + ",");
+                sw.WriteLine(inputArr[5] + ",");
             }
 
 
@@ -107,12 +109,12 @@ namespace AlternativProgrammering
         private static void Search()
         {
 
-            
+
             Console.SetCursorPosition(17, 15);
             Console.Write("Søg efter:");
             string input = Console.ReadLine();
 
-            
+
             string line = "";
             using (StreamReader sr = new StreamReader(@"test.txt"))
             {
@@ -160,7 +162,6 @@ namespace AlternativProgrammering
             if (valg.Key == ConsoleKey.C)
             {
                 Overview();
-
             }
 
             if (valg.Key == ConsoleKey.P)
@@ -172,23 +173,27 @@ namespace AlternativProgrammering
 
         private static void Overview()
         {
+
             string[] ReadFile = File.ReadAllLines(@"test.txt");
             Console.SetCursorPosition(17, 10);
             Console.Write("Indholdet af databasen er: ");
+            Console.SetCursorPosition(17, 11);
 
 
             foreach (string line in ReadFile)
             {
                 // Use a tab to indent each line of the file.
 
-                Console.Write("\t" + line);
+                Console.Write(line+ ",");
             }
 
-
             Console.ReadLine();
+
         }
 
-       
+        
+
+
     }
-    
+
 }
