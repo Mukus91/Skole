@@ -1,0 +1,7 @@
+C:\Users\moser\source\repos\Alprog\Alprog\bin\Debug\Alprog.exe.config
+C:\Users\moser\source\repos\Alprog\Alprog\bin\Debug\Alprog.exe
+C:\Users\moser\source\repos\Alprog\Alprog\bin\Debug\Alprog.pdb
+C:\Users\moser\source\repos\Alprog\Alprog\obj\Debug\Alprog.csprojAssemblyReference.cache
+C:\Users\moser\source\repos\Alprog\Alprog\obj\Debug\Alprog.csproj.CoreCompileInputs.cache
+C:\Users\moser\source\repos\Alprog\Alprog\obj\Debug\Alprog.exe
+C:\Users\moser\source\repos\Alprog\Alprog\obj\Debug\Alprog.pdb
