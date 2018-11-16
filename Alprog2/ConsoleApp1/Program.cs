@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace ConsoleApp1
 {
@@ -16,6 +17,15 @@ namespace ConsoleApp1
             Console.SetWindowPosition(0, 0);
 
             Header();
+
+            Menu();
+
+            Console.ReadLine(); // SLET DET HER LORT EVENTUELT
+        }
+
+        private static void Add()
+        {
+            FileInfo inf = new FileInfo(@"test.txt");
 
             string[] inputArr = new string[6];
 
@@ -43,7 +53,10 @@ namespace ConsoleApp1
                 if (contents.Contains(inputArr[0]))
                 {
                     Console.SetCursorPosition(15, 4);
-                    Console.WriteLine("Findes allerde i databasen");
+                    Console.WriteLine("Findes allerde i databasen, tilbage til start!");
+                    Thread.Sleep(2500);
+                    Console.Clear();
+                    Menu();
                 }
             }
 
@@ -55,13 +68,13 @@ namespace ConsoleApp1
             }
 
             SaveInputToDB(inf, inputArr);
-
-            Console.ReadLine(); // SLET DET HER LORT EVENTUELT
+            Console.Clear();
+            Menu();
         }
 
         private static void SaveInputToDB(FileInfo inf, string[] inputArr)
         {
-            using (StreamWriter sw2 = inf.AppendText()) //Skriver mit array til fil
+            using (StreamWriter sw2 = inf.AppendText()) //Skriver mit array til fil, komma sepereret + linjeskift efter komplet indtastning
             {
                 sw2.Write("\n");
                 sw2.Write(inputArr[0] + ",");
@@ -70,7 +83,7 @@ namespace ConsoleApp1
                 sw2.Write(inputArr[3] + ",");
                 sw2.Write(inputArr[4] + ",");
                 sw2.Write(inputArr[5]);
-
+                sw2.Close();
             }
         }
 
@@ -79,9 +92,10 @@ namespace ConsoleApp1
             bool boolDatabase = false;
 
             string textDatabase = "Database over gæster: \n";
-            using (StreamWriter sw = inf.AppendText()) //Skriver mit array til fil
+            using (StreamWriter sw = inf.AppendText())
             {
                 sw.Write("");
+                sw.Close();
             }
             using (StreamReader sr = new StreamReader(@"test.txt"))
             {
@@ -95,12 +109,16 @@ namespace ConsoleApp1
             if (boolDatabase == false)
             {
                 {
-                    using (StreamWriter sw = inf.AppendText()) //Skriver mit array til fil
+                    using (StreamWriter sw = inf.AppendText()) // Hvis "Database over gæster" ikke findes i dokumentet tilføjes det
                     {
                         sw.Write(textDatabase);
+                        sw.Close();
                     }
                 }
+
             }
+
+
         }
 
         private static void Header()
@@ -111,13 +129,13 @@ namespace ConsoleApp1
 
         private static void Overview()
         {
-            Console.SetCursorPosition(0, 3);
-            Console.Write("Indholdet af databasen er: ");
-            Console.SetCursorPosition(0, 4);
 
+            Console.Clear();
+            Header();
             string line;
             int counter = 0;
             StreamReader file = new System.IO.StreamReader(@"test.txt");
+            Console.SetCursorPosition(23, 2);
             while ((line = file.ReadLine()) != null && counter <= 15)
             {
                 Console.WriteLine(line);
@@ -129,9 +147,13 @@ namespace ConsoleApp1
 
                 Console.WriteLine("Der er over 15 linjer i filen");
             }
-
-
+            file.Close();
+            Console.SetCursorPosition(15, 30);
+            Console.WriteLine("Tryk enter for at vende tilbage til menu");
             Console.ReadLine();
+            Console.Clear();
+
+            Menu();
 
         }
         private static void Menu()
@@ -139,18 +161,18 @@ namespace ConsoleApp1
 
             Header();
             Console.SetCursorPosition(0, 28);
-            Console.WriteLine("Opret[A]");
+            Console.WriteLine("Opret[a]");
 
             Console.SetCursorPosition(11, 28);
-            Console.WriteLine("Søg[B]");
+            Console.WriteLine("Søg[b]");
 
             Console.SetCursorPosition(20, 28);
-            Console.WriteLine("Se Database[C]");
+            Console.WriteLine("Se Database[c]");
 
             Console.SetCursorPosition(59, 28);
-            Console.WriteLine("Sluk pc[P]");
+            Console.WriteLine("Valg[ ]");
 
-            Console.SetCursorPosition(51, 0);
+            Console.SetCursorPosition(64, 28);
 
             //Console.SetCursorPosition(30, 13);
             //Console.WriteLine("Valg: ");
@@ -160,7 +182,7 @@ namespace ConsoleApp1
 
             if (valg.Key == ConsoleKey.A)
             {
-               // Add();
+                Add();
             }
 
             if (valg.Key == ConsoleKey.B)
@@ -173,9 +195,6 @@ namespace ConsoleApp1
                 Overview();
             }
 
-           
-
-            Console.ReadLine();
         }
 
         private static void Search()
@@ -196,7 +215,9 @@ namespace ConsoleApp1
                 {
 
                     Console.WriteLine(input);
+
                 }
+
 
                 Menu();
 

@@ -1,0 +1,7 @@
+Database over gæster: 
+
+60939868,Markus,Byhøjen,2720,Vanløse,moserhansen@gmail.com
+60606060,test,test,test,test,test
+gertrud,gertrud,gertrud,gertrud,gertrud,gertrud
+69696969,420420,420,420,420,420
+911,gg,qq,267j,hvvv,cc@gg.co.uk
