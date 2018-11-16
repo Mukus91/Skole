@@ -66,6 +66,9 @@ namespace ConsoleApp1
 
                 inputArr[i] = Console.ReadLine();
             }
+            Console.SetCursorPosition(0, 10);
+            Console.WriteLine("Gemmer oplysninger...");
+            Thread.Sleep(2500);
 
             SaveInputToDB(inf, inputArr);
             Console.Clear();
