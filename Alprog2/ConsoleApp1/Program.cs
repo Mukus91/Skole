@@ -10,14 +10,13 @@ namespace ConsoleApp1
 
         {
 
-            FileInfo inf = new FileInfo(@"test.txt");
-            CreateDB(inf);
+            StreamWriter sw = File.CreateText(@"test.txt"); // Opretter fil database
+            sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
 
-            Console.SetWindowSize(70, 30);
+            Console.SetWindowSize(70, 30); //Sætter konsol-vinduets dimensioner så alt ser godt ud
             Console.SetWindowPosition(0, 0);
 
             Header();
-
             Menu();
 
             Console.ReadLine(); // SLET DET HER LORT EVENTUELT
@@ -31,6 +30,7 @@ namespace ConsoleApp1
 
             Console.SetCursorPosition(0, 4);
             Console.WriteLine("Telefonnummer :");
+
 
             Console.WriteLine("Navn          :");
 
@@ -54,6 +54,7 @@ namespace ConsoleApp1
                 {
                     Console.SetCursorPosition(15, 4);
                     Console.WriteLine("Findes allerde i databasen, tilbage til start!");
+                    Console.SetCursorPosition(59, 28);
                     Thread.Sleep(2500);
                     Console.Clear();
                     Menu();
@@ -69,6 +70,7 @@ namespace ConsoleApp1
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
             Thread.Sleep(2500);
+
 
             SaveInputToDB(inf, inputArr);
             Console.Clear();
@@ -90,39 +92,7 @@ namespace ConsoleApp1
             }
         }
 
-        private static void CreateDB(FileInfo inf)
-        {
-            bool boolDatabase = false;
 
-            string textDatabase = "Database over gæster: \n";
-            using (StreamWriter sw = inf.AppendText())
-            {
-                sw.Write("");
-                sw.Close();
-            }
-            using (StreamReader sr = new StreamReader(@"test.txt"))
-            {
-                string contents = sr.ReadToEnd();
-                if (contents.Contains(textDatabase))
-                {
-                    boolDatabase = true;
-                }
-            }
-
-            if (boolDatabase == false)
-            {
-                {
-                    using (StreamWriter sw = inf.AppendText()) // Hvis "Database over gæster" ikke findes i dokumentet tilføjes det
-                    {
-                        sw.Write(textDatabase);
-                        sw.Close();
-                    }
-                }
-
-            }
-
-
-        }
 
         private static void Header()
         {
@@ -138,7 +108,7 @@ namespace ConsoleApp1
             string line;
             int counter = 0;
             StreamReader file = new System.IO.StreamReader(@"test.txt");
-            Console.SetCursorPosition(23, 2);
+            Console.SetCursorPosition(23, 3);
             while ((line = file.ReadLine()) != null && counter <= 15)
             {
                 Console.WriteLine(line);
