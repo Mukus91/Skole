@@ -10,14 +10,20 @@ namespace ConsoleApp1
 
         {
 
-            StreamWriter sw = File.CreateText(@"test.txt"); // Opretter fil database
-            sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
+            Console.SetWindowSize(70, 30); // Sætter konsol-vinduets dimensioner så alt ser godt ud
+            Console.SetWindowPosition(0, 0); //
 
-            Console.SetWindowSize(70, 30); //Sætter konsol-vinduets dimensioner så alt ser godt ud
-            Console.SetWindowPosition(0, 0);
+            string file = @"test.txt";
+            if (File.Exists(file) == false) // Hvis filen ikke eksisterer oprettes den, ellers fortsætter vi bare
+            {
+                StreamWriter sw = File.CreateText(@"test.txt"); // Opretter fil database
+                sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
+            }
+
 
             Header();
             Menu();
+
 
             Console.ReadLine(); // SLET DET HER LORT EVENTUELT
         }
@@ -45,6 +51,8 @@ namespace ConsoleApp1
             Console.SetCursorPosition(16, 4);
 
             inputArr[0] = Console.ReadLine();
+
+          
 
 
             using (StreamReader sr = new StreamReader(@"test.txt"))
@@ -107,7 +115,7 @@ namespace ConsoleApp1
             Header();
             string line;
             int counter = 0;
-            StreamReader file = new System.IO.StreamReader(@"test.txt");
+            StreamReader file = new StreamReader(@"test.txt");
             Console.SetCursorPosition(23, 3);
             while ((line = file.ReadLine()) != null && counter <= 15)
             {
@@ -146,10 +154,6 @@ namespace ConsoleApp1
             Console.WriteLine("Valg[ ]");
 
             Console.SetCursorPosition(64, 28);
-
-            //Console.SetCursorPosition(30, 13);
-            //Console.WriteLine("Valg: ");
-            //Console.SetCursorPosition(35, 13);
 
             ConsoleKeyInfo valg = Console.ReadKey();
 
