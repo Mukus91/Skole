@@ -50,7 +50,7 @@ namespace ConsoleApp1
 
             Console.SetCursorPosition(16, 4);
 
-            inputArr[0] = Console.ReadLine();
+            inputArr[0] = Console.ReadLine(); // Telefon nummeret gemmes så vi kan tjekke databasen for det, inden vi går videre.
 
 
 
@@ -69,11 +69,12 @@ namespace ConsoleApp1
                 }
             }
 
-            for (int i = 1; i < inputArr.Length; i++)
+            for (int i = 1; i < inputArr.Length; i++) // Loop der tager imod readlines fra 1-6 til vores inputarray
             {
                 Console.SetCursorPosition(16, i + 4);
 
                 inputArr[i] = Console.ReadLine();
+            
             }
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
@@ -183,8 +184,7 @@ namespace ConsoleApp1
             Console.Write("Søg efter:");
             string input = Console.ReadLine();
 
-            //System.IO.StreamReader file =
-            //new System.IO.StreamReader(@"UserDB.txt");
+          
 
             StreamReader file = new StreamReader(@"UserDB.txt");
 
