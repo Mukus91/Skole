@@ -13,10 +13,10 @@ namespace ConsoleApp1
             Console.SetWindowSize(70, 30); // Sætter konsol-vinduets dimensioner så alt ser godt ud
             Console.SetWindowPosition(0, 0); //
 
-            string file = @"test.txt";
+            string file = @"UserDB.txt";
             if (File.Exists(file) == false) // Hvis filen ikke eksisterer oprettes den, ellers fortsætter vi bare
             {
-                StreamWriter sw = File.CreateText(@"test.txt"); // Opretter fil database
+                StreamWriter sw = File.CreateText(@"UserDB.txt"); // Opretter fil database
                 sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
             }
 
@@ -30,7 +30,7 @@ namespace ConsoleApp1
 
         private static void Add()
         {
-            FileInfo inf = new FileInfo(@"test.txt");
+            FileInfo inf = new FileInfo(@"UserDB.txt");
 
             string[] inputArr = new string[6];
 
@@ -52,17 +52,17 @@ namespace ConsoleApp1
 
             inputArr[0] = Console.ReadLine();
 
-          
 
 
-            using (StreamReader sr = new StreamReader(@"test.txt"))
+
+            using (StreamReader sr = new StreamReader(@"UserDB.txt"))
             {
                 string contents = sr.ReadToEnd();
                 if (contents.Contains(inputArr[0]))
                 {
                     Console.SetCursorPosition(15, 4);
                     Console.WriteLine("Findes allerde i databasen, tilbage til start!");
-                    Console.SetCursorPosition(59, 28);
+                    Console.SetCursorPosition(64, 28);
                     Thread.Sleep(2500);
                     Console.Clear();
                     Menu();
@@ -115,7 +115,7 @@ namespace ConsoleApp1
             Header();
             string line;
             int counter = 0;
-            StreamReader file = new StreamReader(@"test.txt");
+            StreamReader file = new StreamReader(@"UserDB.txt");
             Console.SetCursorPosition(23, 3);
             while ((line = file.ReadLine()) != null && counter <= 15)
             {
@@ -183,24 +183,38 @@ namespace ConsoleApp1
             Console.Write("Søg efter:");
             string input = Console.ReadLine();
 
-            //string line = "";
-            using (StreamReader sr = new StreamReader(@"test.txt"))
+            //System.IO.StreamReader file =
+            //new System.IO.StreamReader(@"UserDB.txt");
+
+            StreamReader file = new StreamReader(@"UserDB.txt");
+
+            int counter = 0;
+            string line;
+
+            while ((line = file.ReadLine()) != null)
             {
-
-
-                while ((input = sr.ReadLine()) != null)
+                if (line.Contains(input))
                 {
-
-                    Console.WriteLine(input);
-
+                    break;
                 }
 
-
-                Menu();
-
+                counter++;
             }
-        }
 
+            Console.Clear();
+            Header();
+            Console.SetCursorPosition(0, 5);
+            Console.WriteLine("Linje der indeholder din indtastning: \n{0}", line);
+
+            file.Close();
+
+
+
+            Menu();
+
+        }
     }
+
 }
+
 
