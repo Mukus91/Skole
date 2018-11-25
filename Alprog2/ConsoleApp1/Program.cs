@@ -74,7 +74,7 @@ namespace ConsoleApp1
                 Console.SetCursorPosition(16, i + 4);
 
                 inputArr[i] = Console.ReadLine();
-            
+
             }
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
@@ -177,14 +177,10 @@ namespace ConsoleApp1
 
         private static void Search()
         {
-
-            Header();
-
             Console.SetCursorPosition(30, 12);
             Console.Write("Søg efter:");
-            string input = Console.ReadLine();
 
-          
+            string input = Console.ReadLine();
 
             StreamReader file = new StreamReader(@"UserDB.txt");
 
@@ -207,9 +203,6 @@ namespace ConsoleApp1
             Console.WriteLine("Linje der indeholder din indtastning: \n{0}", line);
 
             file.Close();
-
-
-
             Menu();
 
         }
