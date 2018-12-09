@@ -115,6 +115,7 @@ namespace ConsoleApp1
             Console.Clear();
             Header();
             string line;
+            ConsoleKeyInfo valg = Console.ReadKey();
             int counter = 0;
             StreamReader file = new StreamReader(@"UserDB.txt");
             Console.SetCursorPosition(23, 3);
@@ -124,11 +125,33 @@ namespace ConsoleApp1
                 counter++;
             }
 
+
             if (counter >= 15)
             {
+                Console.WriteLine("Tryk på A for at se mere, og tryk B for at komme tilbage til start");
+                //Console.ReadLine();
+                
+
+                if (valg.Key == ConsoleKey.A)
+                {
+
+                    while ((line = file.ReadLine()) != null)
+                    {
+                     Console.WriteLine(line);
+                    }
+                    
+                }
+
+                if (valg.Key == ConsoleKey.B)
+                {
+                    Menu();
+                }
 
                 Console.WriteLine("Der er over 15 linjer i filen");
+
+
             }
+
             file.Close();
             Console.SetCursorPosition(15, 30);
             Console.WriteLine("Tryk enter for at vende tilbage til menu");
