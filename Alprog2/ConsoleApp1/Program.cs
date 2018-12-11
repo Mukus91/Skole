@@ -12,27 +12,30 @@ namespace ConsoleApp1
 
             Console.SetWindowSize(70, 30); // Sætter konsol-vinduets dimensioner så alt ser godt ud
             Console.SetWindowPosition(0, 0); //
+            Header();
 
-            string file = @"UserDB.txt";
-            if (File.Exists(file) == false) // Hvis filen ikke eksisterer oprettes den, ellers fortsætter vi bare
+
+            if (File.Exists(@"DB.txt") == false) // Hvis filen ikke eksisterer oprettes den, ellers fortsætter vi bare
             {
-                StreamWriter sw = File.CreateText(@"UserDB.txt"); // Opretter fil database
+                StreamWriter sw = File.CreateText(@"DB.txt"); // Opretter fil database
                 sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
             }
 
 
-            Header();
+            
             Menu();
 
 
-            Console.ReadLine(); // SLET DET HER LORT EVENTUELT
+            //Console.ReadLine(); // SLET DET HER LORT EVENTUELT
         }
+
+
+
 
         private static void Add()
         {
-            FileInfo inf = new FileInfo(@"UserDB.txt");
-
-            string[] inputArr = new string[6];
+            Console.Clear();
+            Header();
 
             Console.SetCursorPosition(0, 4);
             Console.WriteLine("Telefonnummer :");
@@ -50,120 +53,121 @@ namespace ConsoleApp1
 
             Console.SetCursorPosition(16, 4);
 
-            inputArr[0] = Console.ReadLine(); // Telefon nummeret gemmes så vi kan tjekke databasen for det, inden vi går videre.
+            string[] inputArr = new string[6];
 
+            inputArr[0] = Console.ReadLine();
 
+            
+            StreamReader R1 = new StreamReader(@"DB.txt");
+            string contents = R1.ReadToEnd();
 
-
-            using (StreamReader sr = new StreamReader(@"UserDB.txt"))
+            if (contents.Contains(inputArr[0])) // Hvis telefonnummeret findes i databasen ryger vi tilbage til start
             {
-                string contents = sr.ReadToEnd();
-                if (contents.Contains(inputArr[0]))
-                {
-                    Console.SetCursorPosition(15, 4);
-                    Console.WriteLine("Findes allerde i databasen, tilbage til start!");
-                    Console.SetCursorPosition(64, 28);
-                    Thread.Sleep(2500);
-                    Console.Clear();
-                    Menu();
-                }
+                Console.SetCursorPosition(15, 4);
+                Console.WriteLine("Findes allerde i databasen, tilbage til start!");
+                Console.SetCursorPosition(59, 28);
+                Thread.Sleep(2500);
+                Console.Clear();
+                Menu();
             }
 
-            for (int i = 1; i < inputArr.Length; i++) // Loop der tager imod readlines fra 1-6 til vores inputarray
+            R1.Close();
+
+
+            for (int i = 1; i < inputArr.Length; i++) // Loop der tager input fra brugeren, starter på 1, da vores [0] er telefonnummer
             {
+
                 Console.SetCursorPosition(16, i + 4);
 
                 inputArr[i] = Console.ReadLine();
-
             }
+
+
+            string input = "";
+
+            for (int i = 0; i < inputArr.Length; i++) // Loop der laver vores array om til en komma-sepereret string
+            {
+                input = input + "," + inputArr[i].ToLower();
+            }
+            input = input.TrimStart(' ', ',');
+
+
+            StreamWriter W1 = new StreamWriter((@"DB.txt"), true);
+
+            {
+                W1.WriteLine(input);
+                W1.Close();
+            }
+
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
             Thread.Sleep(2500);
 
 
-            SaveInputToDB(inf, inputArr);
+
             Console.Clear();
             Menu();
         }
 
-        private static void SaveInputToDB(FileInfo inf, string[] inputArr)
-        {
-            using (StreamWriter sw2 = inf.AppendText()) //Skriver mit array til fil, komma sepereret + linjeskift efter komplet indtastning
-            {
-                sw2.Write("\n");
-                sw2.Write(inputArr[0] + ",");
-                sw2.Write(inputArr[1] + ",");
-                sw2.Write(inputArr[2] + ",");
-                sw2.Write(inputArr[3] + ",");
-                sw2.Write(inputArr[4] + ",");
-                sw2.Write(inputArr[5]);
-                sw2.Close();
-            }
-        }
+
 
 
 
         private static void Header()
         {
             Console.SetCursorPosition(8, 0);
-            Console.WriteLine("Carlos Montana Information Systems - Gæste-registering");
+            Console.Write("Carlos Montana Information Systems - Gæste-registering");
         }
 
         private static void Overview()
         {
 
             Console.Clear();
+
             Header();
+
             string line;
-            ConsoleKeyInfo valg = Console.ReadKey();
             int counter = 0;
-            StreamReader file = new StreamReader(@"UserDB.txt");
-            Console.SetCursorPosition(23, 3);
-            while ((line = file.ReadLine()) != null && counter <= 15)
+            StreamReader R1 = new StreamReader(@"DB.txt");
+
+
+            Console.SetCursorPosition(0, 5);
+
+            while ((line = R1.ReadLine()) != null && counter <= 15)
             {
                 Console.WriteLine(line);
                 counter++;
-            }
 
+            }
 
             if (counter >= 15)
             {
-                Console.WriteLine("Tryk på A for at se mere, og tryk B for at komme tilbage til start");
-                //Console.ReadLine();
-                
-
-                if (valg.Key == ConsoleKey.A)
-                {
-
-                    while ((line = file.ReadLine()) != null)
-                    {
-                     Console.WriteLine(line);
-                    }
-                    
-                }
-
-                if (valg.Key == ConsoleKey.B)
-                {
-                    Menu();
-                }
 
                 Console.WriteLine("Der er over 15 linjer i filen");
 
-
+                //Vis flere linjer
             }
 
-            file.Close();
-            Console.SetCursorPosition(15, 30);
-            Console.WriteLine("Tryk enter for at vende tilbage til menu");
-            Console.ReadLine();
-            Console.Clear();
+            else
+            {
+                Menu();
+            }
 
-            Menu();
+            R1.Close();
+
+
+
+            /*Console.SetCursorPosition(15, 25);
+            Console.Write("Tryk enter for at vende tilbage til menu");
+            Console.ReadLine();
+            Console.Clear();*/
+
+
 
         }
         private static void Menu()
         {
-
+            
             Header();
             Console.SetCursorPosition(0, 28);
             Console.WriteLine("Opret[a]");
@@ -200,37 +204,30 @@ namespace ConsoleApp1
 
         private static void Search()
         {
+
+            Header();
+
             Console.SetCursorPosition(30, 12);
             Console.Write("Søg efter:");
+            string Input = Console.ReadLine();
 
-            string input = Console.ReadLine();
 
-            StreamReader file = new StreamReader(@"UserDB.txt");
+            StreamReader R1 = new StreamReader(@"DB.txt");
 
-            int counter = 0;
-            string line;
-
-            while ((line = file.ReadLine()) != null)
+            while ((Input = R1.ReadLine()) != null)
             {
-                if (line.Contains(input))
-                {
-                    break;
-                }
 
-                counter++;
+                Console.WriteLine(Input);
+
             }
 
-            Console.Clear();
-            Header();
-            Console.SetCursorPosition(0, 5);
-            Console.WriteLine("Linje der indeholder din indtastning: \n{0}", line);
+            R1.Close();
 
-            file.Close();
             Menu();
 
+
         }
+
     }
-
 }
-
 
