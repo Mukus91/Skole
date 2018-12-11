@@ -213,15 +213,23 @@ namespace ConsoleApp1
 
 
             StreamReader R1 = new StreamReader(@"DB.txt");
+            string line;
 
-            while ((Input = R1.ReadLine()) != null)
+            while ((line = R1.ReadLine()) != null)
             {
-
-                Console.WriteLine(Input);
-
+                if (line.Contains(Input))
+                {
+                    Console.WriteLine(line);
+                }
             }
+                //while ((Input = R1.ReadLine()) != null)
+                //{
 
-            R1.Close();
+                //Console.WriteLine(Input);
+
+                // }
+
+                R1.Close();
 
             Menu();
 
