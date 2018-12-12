@@ -7,35 +7,23 @@ namespace ConsoleApp1
     class Program
     {
         static void Main(string[] args)
-
         {
-
             Console.SetWindowSize(70, 30); // Sætter konsol-vinduets dimensioner så alt ser godt ud
             Console.SetWindowPosition(0, 0); //
             Header();
 
-
             if (File.Exists(@"DB.txt") == false) // Hvis filen ikke eksisterer oprettes den, ellers fortsætter vi bare
-            {
+            {                                    
                 StreamWriter sw = File.CreateText(@"DB.txt"); // Opretter fil database
                 sw.Close(); // Lukker filen igen så vi kan tilføje ting til den senere
             }
 
-
-            
             Menu();
 
-
-            //Console.ReadLine(); // SLET DET HER LORT EVENTUELT
         }
-
-
-
-
         private static void Add()
         {
-            Console.Clear();
-            Header();
+            Clear();
 
             Console.SetCursorPosition(0, 4);
             Console.WriteLine("Telefonnummer :");
@@ -57,18 +45,17 @@ namespace ConsoleApp1
 
             inputArr[0] = Console.ReadLine();
 
-            
             StreamReader R1 = new StreamReader(@"DB.txt");
             string contents = R1.ReadToEnd();
 
             if (contents.Contains(inputArr[0])) // Hvis telefonnummeret findes i databasen ryger vi tilbage til start
             {
                 Console.SetCursorPosition(15, 4);
-                Console.WriteLine("Findes allerde i databasen, tilbage til start!");
+                Console.WriteLine("Findes allerde i databasen, prøv igen");
                 Console.SetCursorPosition(59, 28);
                 Thread.Sleep(2500);
-                Console.Clear();
-                Menu();
+                Clear();
+                Add();
             }
 
             R1.Close();
@@ -82,7 +69,6 @@ namespace ConsoleApp1
                 inputArr[i] = Console.ReadLine();
             }
 
-
             string input = "";
 
             for (int i = 0; i < inputArr.Length; i++) // Loop der laver vores array om til en komma-sepereret string
@@ -91,26 +77,21 @@ namespace ConsoleApp1
             }
             input = input.TrimStart(' ', ',');
 
-
-            StreamWriter W1 = new StreamWriter((@"DB.txt"), true);
+            StreamWriter W1 = new StreamWriter((@"DB.txt"), true); // Gemmer vores string i txt
 
             {
                 W1.WriteLine(input);
                 W1.Close();
             }
 
+            W1.Close();
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
             Thread.Sleep(2500);
 
-
-
             Console.Clear();
             Menu();
         }
-
-
-
 
 
         private static void Header()
@@ -121,53 +102,75 @@ namespace ConsoleApp1
 
         private static void Overview()
         {
-
-            Console.Clear();
-
-            Header();
-
-            string line;
-            int counter = 0;
-            StreamReader R1 = new StreamReader(@"DB.txt");
-
-
+            Console.SetCursorPosition(21, 3);
+            Console.WriteLine("Indhold af databasen:");
             Console.SetCursorPosition(0, 5);
 
-            while ((line = R1.ReadLine()) != null && counter <= 15)
+            string[] txtArr = File.ReadAllLines(@"DB.txt");
+            Console.SetCursorPosition(21, 3);
+            int counter = 0;
+            bool ShowMore = true;
+
+            while (ShowMore == true)
             {
-                Console.WriteLine(line);
-                counter++;
+                
+                Console.SetCursorPosition(0, 5);
 
+                for (int i = 0; i < txtArr.Length; i++)
+                {
+                    if (i > 14)
+                    {
+                        break;
+                    }
+
+                    else
+                    {
+                        Console.WriteLine(txtArr[counter]);
+                        counter += 1;
+                    }
+
+
+                    if (txtArr.Length == counter)
+                    {
+                        Console.WriteLine("Der er ikke mere at vise");
+                        Console.ReadLine();
+                        return;
+                    }
+                }
+
+                Console.SetCursorPosition(12, 21);
+                Console.WriteLine("Der er {0} linjer som ikke bliver vist",txtArr.Length - counter);
+
+                Console.SetCursorPosition(40, 28);
+                Console.Write("Se mere [p]");
+                Console.SetCursorPosition(64, 28);
+                ConsoleKeyInfo valg = Console.ReadKey();
+                if (valg.Key != ConsoleKey.P)
+                {
+
+                    ShowMore = false;
+
+                }
+                else
+                {
+                    Clear();
+                }
+                
             }
-
-            if (counter >= 15)
-            {
-
-                Console.WriteLine("Der er over 15 linjer i filen");
-
-                //Vis flere linjer
-            }
-
-            else
-            {
-                Menu();
-            }
-
-            R1.Close();
-
-
-
-            /*Console.SetCursorPosition(15, 25);
-            Console.Write("Tryk enter for at vende tilbage til menu");
-            Console.ReadLine();
-            Console.Clear();*/
-
-
-
+            
         }
+
+        private static void Clear()
+        {
+            for (int i = 1; i < 26; i++)
+            {
+                Console.SetCursorPosition(0, i);
+                Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r"); // Overskriver linjer fra 1-26 med tomme linjer, i stedet for console.clear
+            }
+        }
+
         private static void Menu()
         {
-            
             Header();
             Console.SetCursorPosition(0, 28);
             Console.WriteLine("Opret[a]");
@@ -200,20 +203,29 @@ namespace ConsoleApp1
                 Overview();
             }
 
+            if (valg.Key == ConsoleKey.P)
+            {
+
+            }
+
         }
 
         private static void Search()
         {
+            Clear();
 
-            Header();
-
-            Console.SetCursorPosition(30, 12);
+            Console.SetCursorPosition(24, 3);
             Console.Write("Søg efter:");
-            string Input = Console.ReadLine();
 
+            string Input = Console.ReadLine().ToLower();
+            Clear();
+            Console.SetCursorPosition(24, 3);
+            Console.Write("Resultat for {0}", Input);
+            Console.SetCursorPosition(0, 6);
 
             StreamReader R1 = new StreamReader(@"DB.txt");
             string line;
+
 
             while ((line = R1.ReadLine()) != null)
             {
@@ -222,15 +234,8 @@ namespace ConsoleApp1
                     Console.WriteLine(line);
                 }
             }
-                //while ((Input = R1.ReadLine()) != null)
-                //{
 
-                //Console.WriteLine(Input);
-
-                // }
-
-                R1.Close();
-
+            R1.Close();
             Menu();
 
 
