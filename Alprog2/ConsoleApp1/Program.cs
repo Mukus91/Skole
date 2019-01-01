@@ -21,6 +21,14 @@ namespace ConsoleApp1
 
             Menu();
         }
+
+        static void PrintMessage(string msg, int verticalIndex)
+        {
+            Console.SetCursorPosition(16, verticalIndex + 4);
+            Console.WriteLine(msg);
+            Thread.Sleep(1000);
+        }
+
         private static void Add()
         {
             Clear();
@@ -39,11 +47,11 @@ namespace ConsoleApp1
             Console.WriteLine("Email         :");
 
 
-            StreamReader R1 = new StreamReader(@"DB.txt");
-            string db = R1.ReadToEnd(); //Læser alle karakterer fra vores DB.txt fil, så vi kan tjekke om telefonnummeret findes i DB.
-            R1.Close();
-            string[] inputArr = new string[6];
+            StreamReader r1 = new StreamReader(@"DB.txt");
+            string db = r1.ReadToEnd(); //Læser alle karakterer fra vores DB.txt fil, så vi kan tjekke om telefonnummeret findes i DB.
+            r1.Close();
 
+            string[] inputArr = new string[6];
 
             for (int i = 0; i < inputArr.Length; i++) // Loop der tager input fra brugeren
             {
@@ -51,6 +59,8 @@ namespace ConsoleApp1
                 Console.Write(new string(' ', 50)); //Rydder linjen for den eventuelle fejlbesked som loopet nedenunder kan producere, inden vi tager input igen.
                 Console.SetCursorPosition(16, i + 4);
                 inputArr[i] = Console.ReadLine();
+                string incorrect = "Forkert indtastning, prøv igen";
+                string toolong = "Din indtastning er for lang/kort, prøv igen";
 
 
                 if (i == 0) // Telefonnummer
@@ -61,26 +71,19 @@ namespace ConsoleApp1
 
                         if (inputArr[0].Length != 8 && i == 0) //Tjekker om tallet er på 8 cifre. Danske brugere only!
                         {
-                            Console.SetCursorPosition(16, i + 4);
-                            Console.WriteLine("Dit telefonnummer er for langt, prøv igen");
-                            Thread.Sleep(1000);
+                            PrintMessage(toolong, i);
                             i--; //Fratrækker et "point" ved forkerte indtastninger så vi ikke skal ind i andre loops, men ryger tilbage til hvor vi kom fra
                         }
 
                         if (db.Contains(inputArr[0]) && i == 0) // Tjekker om telefonnummeret allerede findes i databasen. 
                         {
-                            Console.SetCursorPosition(16, i + 4);
-                            Console.WriteLine("Findes allerede i databasen, prøv igen");
-                            Thread.Sleep(1000);
+                            PrintMessage("Findes allerede i databasen, prøv igen", i);
                             i--;
                         }
                     }
-
-                    else //Hvis input ikke er et tal.
+                    else
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Din indtastning indeholdte forbudte tegn, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(incorrect, i);
                         i--;
                     }
                 }
@@ -89,9 +92,7 @@ namespace ConsoleApp1
                 {
                     if (Regex.IsMatch(inputArr[2], @"^[a-zA-Z0-9' ']+$") == false) //Regex der kun tillader bogstaver og tal
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Din indtastning indeholdte forbudte tegn, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(incorrect, i);
                         i--;
                     }
                 }
@@ -100,17 +101,13 @@ namespace ConsoleApp1
                 {
                     if (Regex.IsMatch(inputArr[3], @"^[a-zA-Z0-9]+$") == false && i == 3) //Regex der kun tillader tal
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Dit postnr indeholdte forbudte tegn, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(incorrect, i);
                         i--;
                     }
 
                     if (inputArr[3].Length != 4 && i == 3) //Tjekker om postnr er på 4 cifre.
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Dit postnr er for langt, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(toolong, i);
                         i--;
                     }
                 }
@@ -118,11 +115,9 @@ namespace ConsoleApp1
                 if (i == 1 || i == 4) // Navn og bynavn, de følger samme regler, placeret længere nede på listen for at undgå problemer når vi så skulle forbi min if (i == 3) statement
                 {
 
-                    if (Regex.IsMatch(inputArr[i], @"^[a-zA-Z]+$") == false) //Regex der kun tillader bogstaver.
+                    if (Regex.IsMatch(inputArr[i], @"^[a-zA-Z' ']+$") == false) //Regex der kun tillader bogstaver.
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Din indtastning indeholdte forbudte tegn, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(incorrect, i);
                         i--;
                     }
                 }
@@ -132,9 +127,7 @@ namespace ConsoleApp1
                 {
                     if (Regex.IsMatch(inputArr[5], @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$") == false) //Regex der tjekker at emailen overholder en masse grundregler.
                     {
-                        Console.SetCursorPosition(16, i + 4);
-                        Console.WriteLine("Din email er indtastet forkert, prøv igen");
-                        Thread.Sleep(1000);
+                        PrintMessage(incorrect, i);
                         i--;
                     }
                 }
@@ -150,14 +143,14 @@ namespace ConsoleApp1
             input = input.TrimStart(' ', ','); //Fjerner eventuelle mellemrum og kommaer fra starten og slutningen af vores string. 
 
 
-            StreamWriter W1 = new StreamWriter((@"DB.txt"), true); // Gemmer vores string i txt
+            StreamWriter w1 = new StreamWriter((@"DB.txt"), true); // Gemmer vores string i txt
 
             {
-                W1.WriteLine(input);
-                W1.Close();
+                w1.WriteLine(input);
+                w1.Close();
             }
 
-            W1.Close(); // Lukker vores streamwriter session så vi kan tilgå filen igen senere
+            w1.Close(); // Lukker vores streamwriter session så vi kan tilgå filen igen senere
             Console.SetCursorPosition(0, 10);
             Console.WriteLine("Gemmer oplysninger...");
             Thread.Sleep(2500);
@@ -173,9 +166,9 @@ namespace ConsoleApp1
 
             string[] txtArr = File.ReadAllLines(@"DB.txt"); //Opretter et array med vores linjer i.
             int counter = 0;
-            bool ShowMore = true;
+            bool showMore = true;
 
-            while (ShowMore == true)
+            while (showMore == true)
             {
 
                 Console.SetCursorPosition(0, 5);
@@ -213,8 +206,8 @@ namespace ConsoleApp1
 
                 if (valg.Key != ConsoleKey.P) //Hvis brugeren ikke trykker P for at se mere, vil showmore blive sat til false, og vores while loop holder derfor op med at køre.
                 {
-
-                    ShowMore = false;
+                    Menu();
+                    showMore = false;
 
                 }
                 else
@@ -230,7 +223,7 @@ namespace ConsoleApp1
 
         private static void Clear()
         {
-            for (int i = 4; i < 26; i++) // Overskriver linjer fra 4-26 med tomme linjer, i stedet for console.clear, så vores menu og overskrift forbliver på skærmen.
+            for (int i = 3; i < 26; i++) // Overskriver linjer fra 4-26 med tomme linjer, i stedet for console.clear, så vores menu og overskrift forbliver på skærmen.
             {
                 Console.SetCursorPosition(0, i);
                 Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
@@ -280,7 +273,7 @@ namespace ConsoleApp1
 
             else
             {
-                Clear();              //Hvis man trykker noget andet ryger man bare ud til menuen igen. 
+                Clear();              //Hvis man trykker noget andet ryger man bare ud til menuen igen. Da det er vores "default" setting. 
                 Menu();
             }
 
@@ -299,11 +292,11 @@ namespace ConsoleApp1
             Console.Write("Resultat for {0}", Input); //Skriver brugerens søgning på skærmen. 
             Console.SetCursorPosition(0, 6);
 
-            StreamReader R1 = new StreamReader(@"DB.txt");
+            StreamReader r1 = new StreamReader(@"DB.txt");
             string line;
 
 
-            while ((line = R1.ReadLine()) != null)
+            while ((line = r1.ReadLine()) != null)
             {
                 if (line.Contains(Input)) //Hvis linjen indeholder det personen søgte efter bliver det printet i vinduet. 
                 {
@@ -311,7 +304,7 @@ namespace ConsoleApp1
                 }
             }
 
-            R1.Close(); // Lukker filen når vi er færdige med at søge, så vi kan åbne den andetsteds. 
+            r1.Close(); // Lukker filen når vi er færdige med at søge, så vi kan åbne den andetsteds. 
             Menu();
 
 
